@@ -7,19 +7,6 @@ describe('DOMAIN - Category - aggregates', () => {
         fixture = new CategoryTestFixture();
     });
 
-    function generateRandomText(length = 256) {
-        const characters =
-            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-        let result = '';
-
-        for (let i = 0; i < length; i++) {
-            const randomIndex = Math.floor(Math.random() * characters.length);
-            result += characters.charAt(randomIndex);
-        }
-
-        return result;
-    }
-
     test('Should Instantiate Category', () => {
         const validCategory = fixture.getValidCategory();
         var category = new Category(
@@ -89,7 +76,10 @@ describe('DOMAIN - Category - aggregates', () => {
         }
     );
 
-    test.each(['a', 'as'])(
+    test.each([
+        CategoryTestFixture.generateNameLassThan3Characters(),
+        CategoryTestFixture.generateNameLassThan3Characters(),
+    ])(
         'Should throw error when name has lass then 3 character s',
         (value: string) => {
             const validCategory = fixture.getValidCategory();
@@ -104,7 +94,10 @@ describe('DOMAIN - Category - aggregates', () => {
         }
     );
 
-    test.each([generateRandomText(321), generateRandomText(256)])(
+    test.each([
+        CategoryTestFixture.generateText(321),
+        CategoryTestFixture.generateText(256),
+    ])(
         'Should throw error when name has more then 255 character',
         (value: string) => {
             const validCategory = fixture.getValidCategory();
@@ -119,7 +112,10 @@ describe('DOMAIN - Category - aggregates', () => {
         }
     );
 
-    test.each([generateRandomText(10_001), generateRandomText(10_003)])(
+    test.each([
+        CategoryTestFixture.generateText(10_001),
+        CategoryTestFixture.generateText(10_003),
+    ])(
         'Should throw error when description has more then 10_000 character',
         (value: string) => {
             const validCategory = fixture.getValidCategory();
@@ -258,7 +254,10 @@ describe('DOMAIN - Category - aggregates', () => {
         }
     );
 
-    test.each([generateRandomText(321), generateRandomText(256)])(
+    test.each([
+        CategoryTestFixture.generateText(321),
+        CategoryTestFixture.generateText(256),
+    ])(
         'Should throw error when name has more then 255 character',
         (value: string) => {
             const validCategory = fixture.getValidCategory();
@@ -273,7 +272,10 @@ describe('DOMAIN - Category - aggregates', () => {
         }
     );
 
-    test.each([generateRandomText(10_001), generateRandomText(10_003)])(
+    test.each([
+        CategoryTestFixture.generateText(10_001),
+        CategoryTestFixture.generateText(10_003),
+    ])(
         'Should throw error when description has more then 10_000 character',
         (value: string) => {
             const validCategory = fixture.getValidCategory();

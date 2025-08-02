@@ -9,7 +9,11 @@ export class CategoryTestFixture {
         );
     }
 
-    public generateText(length = 256) {
+    public static generateNameLassThan3Characters() {
+        return faker.commerce.productName().slice(0, 2);
+    }
+
+    public static generateText(length = 256) {
         const characters =
             'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
         let result = '';
