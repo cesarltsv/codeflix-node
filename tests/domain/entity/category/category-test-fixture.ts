@@ -1,8 +1,12 @@
+import { faker } from '@faker-js/faker';
 import { Category } from '../../../../src/domain/entity/category/category';
 
 export class CategoryTestFixture {
-    public getValidCategory(name?: string, description?: string) {
-        return new Category('category name', 'category description');
+    public getValidCategory() {
+        return new Category(
+            faker.commerce.productName().slice(0, 255),
+            faker.commerce.productDescription().slice(0, 10_000)
+        );
     }
 
     public generateText(length = 256) {

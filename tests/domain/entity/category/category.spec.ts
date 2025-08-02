@@ -183,13 +183,11 @@ describe('DOMAIN - Category - aggregates', () => {
             validCategory.name,
             validCategory.description
         );
-        const newValue = {
-            name: 'newName',
-            description: 'newDescription',
-        };
-        category.update(newValue.name, newValue.description);
-        expect(category.name).toBe(newValue.name);
-        expect(category.description).toBe(newValue.description);
+        const newCategory = fixture.getValidCategory();
+
+        category.update(newCategory.name, newCategory.description);
+        expect(category.name).toBe(newCategory.name);
+        expect(category.description).toBe(newCategory.description);
     });
 
     test('Should name update category', () => {
@@ -199,11 +197,10 @@ describe('DOMAIN - Category - aggregates', () => {
             validCategory.description
         );
         const currentDescription = category.description;
-        const newValue = {
-            name: 'newName',
-        };
-        category.update(newValue.name);
-        expect(category.name).toBe(newValue.name);
+        const newCategory = fixture.getValidCategory();
+
+        category.update(newCategory.name);
+        expect(category.name).toBe(newCategory.name);
         expect(category.description).toBe(currentDescription);
     });
 
@@ -233,6 +230,7 @@ describe('DOMAIN - Category - aggregates', () => {
             const expectedError = new EntityValidationExceptions(
                 'Description should not be null or undefined'
             );
+            new Category(validCategory.name, validCategory.description);
             try {
                 new Category(validCategory.name, value as string);
             } catch (err) {
@@ -248,8 +246,12 @@ describe('DOMAIN - Category - aggregates', () => {
             const expectedError = new EntityValidationExceptions(
                 'Name should be at leats 3 characters long'
             );
+            const category = new Category(
+                validCategory.name,
+                validCategory.description
+            );
             try {
-                new Category(value, validCategory.description);
+                category.update(value);
             } catch (err) {
                 expect(err).toEqual(expectedError);
             }
