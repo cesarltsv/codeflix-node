@@ -1,6 +1,6 @@
 import { randomUUID, type UUID } from 'crypto';
 import { Category } from './../../../../src/domain/entity/category/category';
-import { EntityValidationExceptions } from '../../../../src/domain/exceptions/enity-validation-exception';
+import { EntityValidationExceptions } from '../../../../src/domain/exceptions/entity-validation-exception';
 describe('DOMAIN - Category - aggregates', () => {
     function generateRandomText(length = 256) {
         const characters =

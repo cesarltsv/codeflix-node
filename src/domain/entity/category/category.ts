@@ -1,5 +1,5 @@
 import { randomUUID, type UUID } from 'crypto';
-import { EntityValidationExceptions } from '../../exceptions/enity-validation-exception';
+import { EntityValidationExceptions } from '../../exceptions/entity-validation-exception';
 
 export class Category {
     private _id: UUID;
