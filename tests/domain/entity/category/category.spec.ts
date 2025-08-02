@@ -1,7 +1,7 @@
 import { randomUUID, type UUID } from 'crypto';
 import { Category } from './../../../../src/domain/entity/category/category';
 describe('DOMAIN - Category - aggregates', () => {
-    it('Should Instantiate Category', () => {
+    test('Should Instantiate Category', () => {
         const validData = {
             name: 'Category Name',
             description: 'This is a description mock',
@@ -41,6 +41,28 @@ describe('DOMAIN - Category - aggregates', () => {
             expect(category.description).toBe(validData.description);
             expect(category.isActive).toBe(isActive);
             expect(category.createdAt).toBeInstanceOf(Date);
+        }
+    );
+
+    test.each(['', ' ', '    ', undefined, null])(
+        'Should throw error when Instatiated with name empty',
+        (name: string | undefined | null) => {
+            const description = 'This is a description mock';
+
+            expect(() => new Category(name as string, description)).toThrow(
+                'Name should not be empty or null'
+            );
+        }
+    );
+
+    test.each([undefined, null])(
+        'Should throw error when Instatiated description with %s',
+        (description: string | undefined | null) => {
+            const name = 'fakeName';
+
+            expect(() => new Category(name, description as string)).toThrow(
+                'Description should not be null or undefined'
+            );
         }
     );
 });

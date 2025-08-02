@@ -13,6 +13,17 @@ export class Category {
         this._isActive = isActive;
         this._createdAt = new Date();
         this._id = randomUUID();
+        this.validate();
+    }
+
+    public validate(): void {
+        if (!this._name || !this._name.length || !this._name.trim().length) {
+            throw new Error('Name should not be empty or null');
+        }
+
+        if (this._description == null || this._description == undefined) {
+            throw new Error('Description should not be null or undefined');
+        }
     }
 
     get id(): string {
