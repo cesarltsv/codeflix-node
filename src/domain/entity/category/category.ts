@@ -1,5 +1,4 @@
-import { randomUUID, type UUID } from 'crypto';
-import { EntityValidationExceptions } from '../../exceptions/entity-validation-exception';
+import { type UUID } from 'crypto';
 import { AggragateRoot } from '../../seedWork/aggregate-root';
 import { DomainValidation } from '../../validation/domain-validation';
 

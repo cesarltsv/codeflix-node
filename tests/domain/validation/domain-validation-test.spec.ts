@@ -1,6 +1,6 @@
+import { faker } from '@faker-js/faker';
 import { CategoryTestFixture } from '../entity/category/category-test-fixture';
 import { DomainValidation } from './../../../src/domain/validation/domain-validation';
-import { faker } from '@faker-js/faker';
 
 describe('DOMAIN - domainValidationTest', () => {
     test('Should not throw error null', () => {

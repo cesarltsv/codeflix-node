@@ -1,5 +1,4 @@
 import { EntityValidationExceptions } from '../exceptions/entity-validation-exception';
-import { Entity } from '../seedWork/entity-seedwork';
 
 export class DomainValidation {
     public static notNull(target: object | string, fieldName: string) {
