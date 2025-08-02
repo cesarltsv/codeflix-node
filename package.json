@@ -8,7 +8,7 @@
     },
     "scripts": {
         "start:dev": "ts-node src/main.ts",
-        "test": "jest",
+        "test": "jest --verbose",
         "prettier": "npx prettier src/**.ts && src/**.ts --write",
         "lint": "eslint . --ext .ts",
         "lint:fix": "eslint . --ext .ts --fix",
