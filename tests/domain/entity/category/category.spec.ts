@@ -182,4 +182,104 @@ describe('DOMAIN - Category - aggregates', () => {
         expect(category.isActive).toBe(false);
         expect(category.createdAt).toBeInstanceOf(Date);
     });
+
+    test('Should update category description and name', () => {
+        const category = new Category('name Fake', 'fake Discription');
+        const newValue = {
+            name: 'newName',
+            description: 'newDescription',
+        };
+        category.update(newValue.name, newValue.description);
+        expect(category.name).toBe(newValue.name);
+        expect(category.description).toBe(newValue.description);
+    });
+
+    test('Should name update category', () => {
+        const category = new Category('name Fake', 'fake Discription');
+        const currentDescription = category.description;
+        const newValue = {
+            name: 'newName',
+        };
+        category.update(newValue.name);
+        expect(category.name).toBe(newValue.name);
+        expect(category.description).toBe(currentDescription);
+    });
+
+    test.each(['', ' ', '    '])(
+        'Should throw error when Update with name empty',
+        (value: string) => {
+            const expectedError = new EntityValidationExceptions(
+                'Name should not be empty or null'
+            );
+            const category = new Category(
+                'initial name',
+                'initial description'
+            );
+            try {
+                category.update(value);
+            } catch (err) {
+                expect(err).toEqual(expectedError);
+            }
+        }
+    );
+
+    test.each([undefined, null])(
+        'Should throw error when update description with %s',
+        (value: string | undefined | null) => {
+            const expectedError = new EntityValidationExceptions(
+                'Description should not be null or undefined'
+            );
+            const name = 'fakeName';
+            try {
+                new Category(name, value as string);
+            } catch (err) {
+                expect(err).toEqual(expectedError);
+            }
+        }
+    );
+
+    test.each(['a', 'as'])(
+        'Should throw error update name has lass then 3 character s',
+        (value: string) => {
+            const expectedError = new EntityValidationExceptions(
+                'Name should be at leats 3 characters long'
+            );
+            const description = 'fakeName';
+            try {
+                new Category(value, description);
+            } catch (err) {
+                expect(err).toEqual(expectedError);
+            }
+        }
+    );
+
+    test.each([generateRandomText(321), generateRandomText(256)])(
+        'Should throw error when name has more then 255 character',
+        (value: string) => {
+            const expectedError = new EntityValidationExceptions(
+                'Name should not be greater of 255 characters long'
+            );
+            const description = 'fakeName';
+            try {
+                new Category(value, description);
+            } catch (err) {
+                expect(err).toEqual(expectedError);
+            }
+        }
+    );
+
+    test.each([generateRandomText(10_001), generateRandomText(10_003)])(
+        'Should throw error when description has more then 10_000 character',
+        (value: string) => {
+            const expectedError = new EntityValidationExceptions(
+                'Description should not be greater of 10.000 characters long'
+            );
+            const name = 'fakeName';
+            try {
+                new Category(name, value);
+            } catch (err) {
+                expect(err).toEqual(expectedError);
+            }
+        }
+    );
 });

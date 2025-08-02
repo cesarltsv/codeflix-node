@@ -59,6 +59,12 @@ export class Category {
         this.validate();
     }
 
+    public update(name: string, description: string = '') {
+        if (name?.length) this._name = name;
+        if (description?.length) this._description = description;
+        this.validate();
+    }
+
     get id(): string {
         return this._id;
     }
