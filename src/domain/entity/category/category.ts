@@ -1,4 +1,5 @@
 import { randomUUID, type UUID } from 'crypto';
+import { EntityValidationExceptions } from '../../exceptions/enity-validation-exception';
 
 export class Category {
     private _id: UUID;
@@ -18,11 +19,33 @@ export class Category {
 
     public validate(): void {
         if (!this._name || !this._name.length || !this._name.trim().length) {
-            throw new Error('Name should not be empty or null');
+            throw new EntityValidationExceptions(
+                'Name should not be empty or null'
+            );
+        }
+
+        if (this._name.length < 3) {
+            throw new EntityValidationExceptions(
+                'Name should be at leats 3 characters long'
+            );
+        }
+
+        if (this._name.length > 255) {
+            throw new EntityValidationExceptions(
+                'Name should not be greater of 255 characters long'
+            );
         }
 
         if (this._description == null || this._description == undefined) {
-            throw new Error('Description should not be null or undefined');
+            throw new EntityValidationExceptions(
+                'Description should not be null or undefined'
+            );
+        }
+
+        if (this._description.length > 10_000) {
+            throw new EntityValidationExceptions(
+                'Description should not be greater of 10.000 characters long'
+            );
         }
     }
 

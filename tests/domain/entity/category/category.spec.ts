@@ -1,6 +1,20 @@
 import { randomUUID, type UUID } from 'crypto';
 import { Category } from './../../../../src/domain/entity/category/category';
+import { EntityValidationExceptions } from '../../../../src/domain/exceptions/enity-validation-exception';
 describe('DOMAIN - Category - aggregates', () => {
+    function generateRandomText(length = 256) {
+        const characters =
+            'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+        let result = '';
+
+        for (let i = 0; i < length; i++) {
+            const randomIndex = Math.floor(Math.random() * characters.length);
+            result += characters.charAt(randomIndex);
+        }
+
+        return result;
+    }
+
     test('Should Instantiate Category', () => {
         const validData = {
             name: 'Category Name',
@@ -46,10 +60,14 @@ describe('DOMAIN - Category - aggregates', () => {
 
     test.each(['', ' ', '    ', undefined, null])(
         'Should throw error when Instatiated with name empty',
-        (name: string | undefined | null) => {
+        (value: string | undefined | null) => {
             const description = 'This is a description mock';
-
-            expect(() => new Category(name as string, description)).toThrow(
+            try {
+                new Category(value as string, description);
+            } catch (error) {
+                expect(error).toBeInstanceOf(EntityValidationExceptions);
+            }
+            expect(() => new Category(value as string, description)).toThrow(
                 'Name should not be empty or null'
             );
         }
@@ -57,11 +75,60 @@ describe('DOMAIN - Category - aggregates', () => {
 
     test.each([undefined, null])(
         'Should throw error when Instatiated description with %s',
-        (description: string | undefined | null) => {
+        (value: string | undefined | null) => {
             const name = 'fakeName';
-
-            expect(() => new Category(name, description as string)).toThrow(
+            try {
+                new Category(name, value as string);
+            } catch (error) {
+                expect(error).toBeInstanceOf(EntityValidationExceptions);
+            }
+            expect(() => new Category(name, value as string)).toThrow(
                 'Description should not be null or undefined'
+            );
+        }
+    );
+
+    test.each(['a', 'as'])(
+        'Should throw error when name has lass then 3 character s',
+        (value: string) => {
+            const description = 'fakeName';
+            try {
+                new Category(value, description);
+            } catch (error) {
+                expect(error).toBeInstanceOf(EntityValidationExceptions);
+            }
+            expect(() => new Category(value, description)).toThrow(
+                'Name should be at leats 3 characters long'
+            );
+        }
+    );
+
+    test.each([generateRandomText(321), generateRandomText(256)])(
+        'Should throw error when name has more then 255 character',
+        (value: string) => {
+            const description = 'fakeName';
+            try {
+                new Category(value, description);
+            } catch (error) {
+                expect(error).toBeInstanceOf(EntityValidationExceptions);
+            }
+            expect(() => new Category(value, description)).toThrow(
+                'Name should not be greater of 255 characters long'
+            );
+        }
+    );
+
+    test.each([generateRandomText(10_001), generateRandomText(10_003)])(
+        'Should throw error when description has more then 10_000 character',
+        (value: string) => {
+            const name = 'fakeName';
+            try {
+                new Category(value, value);
+            } catch (error) {
+                expect(error).toBeInstanceOf(EntityValidationExceptions);
+            }
+            expect(() => new Category(name, value)).toThrow(
+                'Description should not be greater of 10.000 characters long'
             );
         }
     );
