@@ -7,10 +7,10 @@ export class Category {
     private _isActive: boolean;
     private _createdAt: Date;
 
-    constructor(name: string, description: string) {
+    constructor(name: string, description: string, isActive: boolean = true) {
         this._name = name;
         this._description = description;
-        this._isActive = true;
+        this._isActive = isActive;
         this._createdAt = new Date();
         this._id = randomUUID();
     }
