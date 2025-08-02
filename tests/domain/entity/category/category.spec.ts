@@ -3,6 +3,7 @@ import { EntityValidationExceptions } from '../../../../src/domain/exceptions/en
 import { CategoryTestFixture } from './category-test-fixture';
 describe('DOMAIN - Category - aggregates', () => {
     let fixture!: CategoryTestFixture;
+    const MAX_DESCRIPTION_LENGTH = 10_000;
     beforeAll(() => {
         fixture = new CategoryTestFixture();
     });
@@ -57,7 +58,7 @@ describe('DOMAIN - Category - aggregates', () => {
             }
             expect(
                 () => new Category(value as string, validCategory.description)
-            ).toThrow('Name should not be empty or null');
+            ).toThrow('name should not be empty or null');
         }
     );
 
@@ -72,7 +73,7 @@ describe('DOMAIN - Category - aggregates', () => {
             }
             expect(
                 () => new Category(validCategory.name, value as string)
-            ).toThrow('Description should not be null or undefined');
+            ).toThrow('description should not be null or undefined');
         }
     );
 
@@ -90,7 +91,7 @@ describe('DOMAIN - Category - aggregates', () => {
             }
             expect(
                 () => new Category(value, validCategory.description)
-            ).toThrow('Name should be at leats 3 characters long');
+            ).toThrow('name should be at leats 3 characters long');
         }
     );
 
@@ -108,7 +109,7 @@ describe('DOMAIN - Category - aggregates', () => {
             }
             expect(
                 () => new Category(value, validCategory.description)
-            ).toThrow('Name should not be greater of 255 characters long');
+            ).toThrow('name should not be greater of 255 characters long');
         }
     );
 
@@ -119,14 +120,13 @@ describe('DOMAIN - Category - aggregates', () => {
         'Should throw error when description has more then 10_000 character',
         (value: string) => {
             const validCategory = fixture.getValidCategory();
-
             try {
                 new Category(validCategory.name, value);
             } catch (error) {
                 expect(error).toBeInstanceOf(EntityValidationExceptions);
             }
             expect(() => new Category(validCategory.name, value)).toThrow(
-                'Description should not be greater of 10.000 characters long'
+                `description should not be greater of ${MAX_DESCRIPTION_LENGTH} characters long`
             );
         }
     );
@@ -204,7 +204,7 @@ describe('DOMAIN - Category - aggregates', () => {
         'Should throw error when Update with name empty',
         (value: string) => {
             const expectedError = new EntityValidationExceptions(
-                'Name should not be empty or null'
+                'name should not be empty or null'
             );
             const validCategory = fixture.getValidCategory();
             const category = new Category(
@@ -224,7 +224,7 @@ describe('DOMAIN - Category - aggregates', () => {
         (value: string | undefined | null) => {
             const validCategory = fixture.getValidCategory();
             const expectedError = new EntityValidationExceptions(
-                'Description should not be null or undefined'
+                'description should not be null or undefined'
             );
             new Category(validCategory.name, validCategory.description);
             try {
@@ -240,7 +240,7 @@ describe('DOMAIN - Category - aggregates', () => {
         (value: string) => {
             const validCategory = fixture.getValidCategory();
             const expectedError = new EntityValidationExceptions(
-                'Name should be at leats 3 characters long'
+                'name should be at leats 3 characters long'
             );
             const category = new Category(
                 validCategory.name,
@@ -262,7 +262,7 @@ describe('DOMAIN - Category - aggregates', () => {
         (value: string) => {
             const validCategory = fixture.getValidCategory();
             const expectedError = new EntityValidationExceptions(
-                'Name should not be greater of 255 characters long'
+                'name should not be greater of 255 characters long'
             );
             try {
                 new Category(value, validCategory.description);
@@ -280,7 +280,7 @@ describe('DOMAIN - Category - aggregates', () => {
         (value: string) => {
             const validCategory = fixture.getValidCategory();
             const expectedError = new EntityValidationExceptions(
-                'Description should not be greater of 10.000 characters long'
+                `description should not be greater of ${MAX_DESCRIPTION_LENGTH} characters long`
             );
             try {
                 new Category(validCategory.name, value);

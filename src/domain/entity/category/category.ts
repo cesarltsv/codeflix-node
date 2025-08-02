@@ -1,6 +1,7 @@
 import { randomUUID, type UUID } from 'crypto';
 import { EntityValidationExceptions } from '../../exceptions/entity-validation-exception';
 import { AggragateRoot } from '../../seedWork/aggregate-root';
+import { DomainValidation } from '../../validation/domain-validation';
 
 export class Category extends AggragateRoot {
     private _name: string;
@@ -18,35 +19,11 @@ export class Category extends AggragateRoot {
     }
 
     public validate(): void {
-        if (!this._name || !this._name.length || !this._name.trim().length) {
-            throw new EntityValidationExceptions(
-                'Name should not be empty or null'
-            );
-        }
-
-        if (this._name.length < 3) {
-            throw new EntityValidationExceptions(
-                'Name should be at leats 3 characters long'
-            );
-        }
-
-        if (this._name.length > 255) {
-            throw new EntityValidationExceptions(
-                'Name should not be greater of 255 characters long'
-            );
-        }
-
-        if (this._description == null || this._description == undefined) {
-            throw new EntityValidationExceptions(
-                'Description should not be null or undefined'
-            );
-        }
-
-        if (this._description.length > 10_000) {
-            throw new EntityValidationExceptions(
-                'Description should not be greater of 10.000 characters long'
-            );
-        }
+        DomainValidation.notEmptyOrNull(this._name, 'name');
+        DomainValidation.minLength(this._name, 'name', 3);
+        DomainValidation.maxLength(this.name, 'name', 255);
+        DomainValidation.notNull(this._description, 'description');
+        DomainValidation.maxLength(this._description, 'description', 10_000);
     }
 
     public activate() {
