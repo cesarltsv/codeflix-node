@@ -1,4 +1,3 @@
-import { randomUUID, type UUID } from 'crypto';
 import { Category } from './../../../../src/domain/entity/category/category';
 import { EntityValidationExceptions } from '../../../../src/domain/exceptions/entity-validation-exception';
 describe('DOMAIN - Category - aggregates', () => {

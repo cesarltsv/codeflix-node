@@ -1,19 +1,19 @@
 import { randomUUID, type UUID } from 'crypto';
 import { EntityValidationExceptions } from '../../exceptions/entity-validation-exception';
+import { AggragateRoot } from '../../seedWork/aggregate-root';
 
-export class Category {
-    private _id: UUID;
+export class Category extends AggragateRoot {
     private _name: string;
     private _description: string;
     private _isActive: boolean;
     private _createdAt: Date;
 
     constructor(name: string, description: string, isActive: boolean = true) {
+        super();
         this._name = name;
         this._description = description;
         this._isActive = isActive;
         this._createdAt = new Date();
-        this._id = randomUUID();
         this.validate();
     }
 
@@ -65,7 +65,7 @@ export class Category {
         this.validate();
     }
 
-    get id(): string {
+    get id(): UUID {
         return this._id;
     }
 
