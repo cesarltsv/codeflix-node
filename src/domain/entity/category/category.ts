@@ -49,6 +49,16 @@ export class Category {
         }
     }
 
+    public activate() {
+        this._isActive = true;
+        this.validate();
+    }
+
+    public deactivate() {
+        this._isActive = false;
+        this.validate();
+    }
+
     get id(): string {
         return this._id;
     }

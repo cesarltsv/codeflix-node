@@ -132,4 +132,54 @@ describe('DOMAIN - Category - aggregates', () => {
             );
         }
     );
+
+    test('Should Active Category', () => {
+        const validData = {
+            name: 'Category Name',
+            description: 'This is a description mock',
+        };
+
+        var category = new Category(
+            validData.name,
+            validData.description,
+            false
+        );
+
+        category.activate();
+
+        expect(category).not.toBeNull();
+        expect(category.id).not.toBeUndefined();
+        expect(category.id).toMatch(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+        );
+        expect(category.name).toBe(validData.name);
+        expect(category.description).toBe(validData.description);
+        expect(category.isActive).toBe(true);
+        expect(category.createdAt).toBeInstanceOf(Date);
+    });
+
+    test('Should Deactive Category', () => {
+        const validData = {
+            name: 'Category Name',
+            description: 'This is a description mock',
+        };
+
+        var category = new Category(
+            validData.name,
+            validData.description,
+            true
+        );
+
+        category.deactivate();
+
+        expect(category).not.toBeNull();
+        expect(category.id).not.toBeUndefined();
+        expect(category.id).toMatch(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+        );
+        expect(category.name).toBe(validData.name);
+        expect(category.description).toBe(validData.description);
+        expect(category.isActive).toBe(false);
+        expect(category.createdAt).toBeInstanceOf(Date);
+    });
 });
