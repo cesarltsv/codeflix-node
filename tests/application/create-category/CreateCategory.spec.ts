@@ -29,6 +29,9 @@ describe('APPLICATION - create category - use cases', () => {
         expect(unitOfWorkMock.commit).toHaveBeenCalledWith(cancelationToken);
         expect(repositoryMock.insert).toHaveBeenCalled();
         expect(output.id).not.toBeNull();
+        expect(output.id).toMatch(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+        );
         expect(output.name).toBe(input.name);
         expect(output.description).toBe(input.description);
         expect(output.isActive).toBe(input.isActive);
@@ -44,6 +47,9 @@ describe('APPLICATION - create category - use cases', () => {
         expect(unitOfWorkMock.commit).toHaveBeenCalledWith(cancelationToken);
         expect(repositoryMock.insert).toHaveBeenCalled();
         expect(output.id).not.toBeNull();
+        expect(output.id).toMatch(
+            /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/
+        );
         expect(output.name).toBe(input.name);
         expect(output.description).toBe('');
         expect(output.isActive).toBe(input.isActive);
