@@ -12,7 +12,8 @@ describe('DOMAIN - Category - aggregates', () => {
         const validCategory = fixture.getValidCategory();
         var category = new Category(
             validCategory.name,
-            validCategory.description
+            validCategory.description,
+            validCategory.isActive
         );
 
         expect(category).not.toBeNull();
