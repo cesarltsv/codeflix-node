@@ -1,4 +1,4 @@
-import { Category } from '../../../../domain/entity/category/category';
+import { Category } from '../../../../domain/entity/Category/Category';
 import type { ICategoryRepository } from '../../../../domain/repository/icategory-repository';
 import type { IUnitOfWork } from '../../../interfaces/iunit-of-work';
 import type { CreateCategoryInput } from './CreateCategoryInput';

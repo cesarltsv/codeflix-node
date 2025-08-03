@@ -1,4 +1,4 @@
-import { Category } from '../../../../src/domain/entity/category/category';
+import { Category } from '../../../../src/domain/entity/Category/Category';
 import { BaseFixture } from '../../../common/base-fixture';
 
 export class CategoryTestFixture extends BaseFixture {

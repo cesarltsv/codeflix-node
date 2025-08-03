@@ -1,5 +1,5 @@
+import { Category } from '../../../../src/domain/entity/Category/Category';
 import { EntityValidationExceptions } from '../../../../src/domain/exceptions/entity-validation-exception';
-import { Category } from './../../../../src/domain/entity/category/category';
 import { CategoryTestFixture } from './category-test-fixture';
 describe('DOMAIN - Category - aggregates', () => {
     let fixture!: CategoryTestFixture;
