@@ -4,6 +4,7 @@ import { EntityValidationExceptions } from '../../../src/domain/exceptions/entit
 import { ICategoryRepository } from '../../../src/domain/repository/icategory-repository';
 import { BaseFixture } from '../../common/base-fixture';
 import { CreateCategoryTestFixture } from './CreateCategoryTestFixture';
+
 describe('APPLICATION - create category - use cases', () => {
     let fixture!: CreateCategoryTestFixture;
     let useCase!: CreateCategory;
@@ -30,6 +31,21 @@ describe('APPLICATION - create category - use cases', () => {
         expect(output.id).not.toBeNull();
         expect(output.name).toBe(input.name);
         expect(output.description).toBe(input.description);
+        expect(output.isActive).toBe(input.isActive);
+        expect(output.createdAt).not.toBeNull();
+    });
+
+    test('Should create a category', async () => {
+        let input = fixture.createCategoryInput();
+        const cancelationToken = new AbortController();
+        input.description = null!;
+        const output = await useCase.handle(input, cancelationToken);
+
+        expect(unitOfWorkMock.commit).toHaveBeenCalledWith(cancelationToken);
+        expect(repositoryMock.insert).toHaveBeenCalled();
+        expect(output.id).not.toBeNull();
+        expect(output.name).toBe(input.name);
+        expect(output.description).toBe('');
         expect(output.isActive).toBe(input.isActive);
         expect(output.createdAt).not.toBeNull();
     });

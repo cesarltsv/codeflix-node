@@ -74,7 +74,7 @@ describe('DOMAIN - Category - aggregates', () => {
             }
             expect(
                 () => new Category(validCategory.name, value as string)
-            ).toThrow('description should not be null or undefined');
+            ).not.toThrow();
         }
     );
 
