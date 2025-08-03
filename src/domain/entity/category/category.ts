@@ -11,7 +11,7 @@ export class Category extends AggragateRoot {
     constructor(name: string, description: string, isActive: boolean = true) {
         super();
         this._name = name;
-        this._description = description;
+        this._description = description ?? '';
         this._isActive = isActive;
         this._createdAt = new Date();
         this.validate();

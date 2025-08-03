@@ -2,7 +2,7 @@ import { EntityValidationExceptions } from '../exceptions/entity-validation-exce
 
 export class DomainValidation {
     public static notNull(target: object | string, fieldName: string) {
-        if (!target) {
+        if (!target && typeof target != 'string') {
             throw new EntityValidationExceptions(
                 `${fieldName} should not be null or undefined`
             );
