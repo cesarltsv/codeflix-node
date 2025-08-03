@@ -1,4 +1,7 @@
-export class CreateCategoryInput {
+import type { IRequest } from '../../../../common/IRequest';
+import type { CreateCategoryOutPut } from './CreateCategoryOutput';
+
+export class CreateCategoryInput implements IRequest<CreateCategoryOutPut> {
     public name: string;
     public description?: string;
     public isActive: boolean;
